@@ -43,5 +43,41 @@ namespace SocialPlatform.Data.Repo
         {
             _context.Users.Remove(user);
         }
+
+        public async Task<User> FindByEmailAsync(string email)
+        {
+            return await _context.Users.Where(u=> u.Email == email).FirstOrDefaultAsync();
+           
+        }
+
+        public async Task ActivateUserAsync(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null) 
+            {
+                user.IsActive = true;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeactivateUserAsync(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null) 
+            {
+                user.IsActive = false;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UpdatePasswordAsync(int userId, string newPassword)
+        {
+            var user = await  _context.Users.FindAsync(userId);
+            if(user != null)
+            {
+                user.Password = newPassword;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
