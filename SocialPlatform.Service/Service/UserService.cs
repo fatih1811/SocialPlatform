@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FluentValidation;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SocialPlatform.Core.DTOs;
 using SocialPlatform.Core.Entities;
+using SocialPlatform.Core.Validator;
 using SocialPlatform.Data.IRepo;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,22 @@ namespace SocialPlatform.Service.Service
 
         public async Task<UserResponseDto> SignUpAsync(UserRequestDto userRequestDto)
         {
+            // Validation işlemi
+            var validator = new UserRequestDtoValidator();
+            var validationResult = await validator.ValidateAsync(userRequestDto);
+
+            if (!validationResult.IsValid)
+            {
+                // Validation hatalarını fırlat
+                throw new ValidationException(validationResult.Errors);
+            }
+            // Email benzersizliği kontrolü
+            var existingUser = await _userRepository.GetByEmailAsync(userRequestDto.Email);
+            if (existingUser != null)
+            {
+                throw new InvalidOperationException("This email is already registered.");
+            }
+
             // Yeni kullanıcıyı oluştur
             var user = new User
             {

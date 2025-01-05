@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using SocialPlatform.Core.DTOs;
 using SocialPlatform.Service;
 using System;
@@ -25,6 +26,11 @@ namespace SocialPlatform.Controllers
             {
                 var response = await _userService.SignUpAsync(userRequestDto);
                 return Ok(response);
+            }
+            catch (ValidationException ex)
+            {
+                // Validation hataları burada ele alınıyor
+                return BadRequest(new { message = "Validation failed", errors = ex.Errors });
             }
             catch (Exception ex)
             {

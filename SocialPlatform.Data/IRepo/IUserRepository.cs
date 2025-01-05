@@ -18,5 +18,6 @@ namespace SocialPlatform.Data.IRepo
         Task ActivateUserAsync(int userId);
         Task DeactivateUserAsync(int userId);
         Task UpdatePasswordAsync(int userId, string newPassword);
+        Task<User> GetByEmailAsync(string email);
     }
 }

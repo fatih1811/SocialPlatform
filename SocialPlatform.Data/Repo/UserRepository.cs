@@ -50,6 +50,10 @@ namespace SocialPlatform.Data.Repo
             return await _context.Users.Where(u=> u.Email == email).FirstOrDefaultAsync();
            
         }
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
 
         public async Task ActivateUserAsync(int userId)
         {

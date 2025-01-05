@@ -32,6 +32,7 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
+
 // JWT Anahtarýný Base64 formatýna dönüþtürün
 var key = Encoding.UTF8.GetBytes("ThisIsA256BitSecretKeyForJWTToken123"); // 32 byte'lýk anahtar
 var base64Key = Convert.ToBase64String(key); // Base64 formatýna dönüþtürülmüþ anahtar
@@ -76,7 +77,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("AllowAll");
 // HTTPS yönlendirme
 app.UseHttpsRedirection();
 
