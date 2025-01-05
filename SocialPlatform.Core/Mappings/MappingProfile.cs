@@ -14,12 +14,15 @@ namespace SocialPlatform.Core.Mappings
     {
         public MappingProfile()
         {
-            
-            CreateMap<User, UserResponseDto>()
-                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+
+            CreateMap<User, UserResponseDto>();
             CreateMap<UserRequestDto, User>();
 
-            
+            CreateMap<LoginRequestDto, User>()
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password));
+
+
             CreateMap<Message, MessageResponseDto>();
             CreateMap<MessageRequestDto, Message>();
         }

@@ -8,7 +8,7 @@ namespace SocialPlatform.Core.Entities
 {
     public class Message
     {
-        public int Id { get; set; }  // Primary Key
+        public int Id { get; set; }  
         public int SenderId { get; set; }  // Mesajı gönderen kullanıcı
         public int ReceiverId { get; set; }  // Mesajı alan kullanıcı
         public string Content { get; set; }  // Mesajın orijinal içeriği

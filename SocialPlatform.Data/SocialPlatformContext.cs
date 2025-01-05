@@ -24,7 +24,6 @@ namespace SocialPlatform.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // İlişkileri tanımla (önceden yapılmış)
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.Sender)
                 .WithMany()
