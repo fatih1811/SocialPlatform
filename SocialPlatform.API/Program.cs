@@ -12,6 +12,8 @@ using System.Text;
 using AutoMapper;
 using SocialPlatform.Service;
 using SocialPlatform.Service.Service;
+using SocialPlatform.Service.Message;
+using SocialPlatform.Service.IMessage;
 
 
 
@@ -21,6 +23,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddCors(options =>

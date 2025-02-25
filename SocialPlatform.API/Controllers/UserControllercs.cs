@@ -52,6 +52,21 @@ namespace SocialPlatform.Controllers
                 return Unauthorized(new { message = ex.Message });
             }
         }
+        // Kullanıcı arama
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchUsers([FromQuery] string query)
+        {
+            var users = await _userService.SearchUsersAsync(query);
+            return Ok(users);
+        }
+
+        // Mesajlaşılmış kullanıcıları getirme
+        [HttpGet("chats/{userId}")]
+        public async Task<IActionResult> GetChattedUsers(int userId)
+        {
+            var chattedUsers = await _userService.GetChattedUsersAsync(userId);
+            return Ok(chattedUsers);
+        }
 
         // PUT: api/user/update-password/{userId}
         [HttpPut("update-password/{userId}")]
@@ -68,34 +83,6 @@ namespace SocialPlatform.Controllers
             }
         }
 
-        // PUT: api/user/activate/{userId}
-        [HttpPut("activate/{userId}")]
-        public async Task<IActionResult> ActivateUser(int userId)
-        {
-            try
-            {
-                await _userService.ActivateUserAsync(userId);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-        }
-
-        // PUT: api/user/deactivate/{userId}
-        [HttpPut("deactivate/{userId}")]
-        public async Task<IActionResult> DeactivateUser(int userId)
-        {
-            try
-            {
-                await _userService.DeactivateUserAsync(userId);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-        }
+       
     }
 }

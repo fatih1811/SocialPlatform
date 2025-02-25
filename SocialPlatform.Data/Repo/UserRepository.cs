@@ -84,5 +84,19 @@ namespace SocialPlatform.Data.Repo
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<User>> SearchUsersAsync(string query)
+        {
+            return await _context.Users
+                .Where(u => u.FirstName.Contains(query) || u.LastName.Contains(query) || u.Email.Contains(query))
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<User>> GetChattedUsersAsync(int userId)
+        {
+            return await _context.Users
+                .Where(u => u.MessagesReceived.Any(m => m.SenderId == userId) || u.MessagesSent.Any(m => m.ReceiverId == userId))
+                .ToListAsync();
+        }
     }
 }

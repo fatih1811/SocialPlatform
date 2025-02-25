@@ -25,6 +25,12 @@ namespace SocialPlatform.Core.Mappings
 
             CreateMap<Message, MessageResponseDto>();
             CreateMap<MessageRequestDto, Message>();
+
+            CreateMap<Message, MessageDto>();
+            CreateMap<MessageDto, Message>();
+
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
         }
     }
 }

@@ -20,5 +20,7 @@ namespace SocialPlatform.Data.IRepo
         Task<List<Message>> GetMessagesWithTranslationAsync(int userId);
         Task DeleteMessageByUserAsync(int messageId, int userId);
         Task<List<Message>> GetMessagesBetweenUsersAsync(int userId1, int userId2);
+        Task<IEnumerable<Message>> GetMessagesAsync(int senderId, int receiverId);
+        Task SendMessageAsync(Message message);
     }
 }

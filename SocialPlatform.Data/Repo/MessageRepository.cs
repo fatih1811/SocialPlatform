@@ -110,5 +110,20 @@ namespace SocialPlatform.Data.Repo
                     (m.SenderId == userId2 && m.ReceiverId == userId1))
         .ToListAsync();
         }
+
+        public async Task<IEnumerable<Message>> GetMessagesAsync(int senderId, int receiverId)
+        {
+            return await _context.Messages
+                .Where(m => (m.SenderId == senderId && m.ReceiverId == receiverId) ||
+                            (m.SenderId == receiverId && m.ReceiverId == senderId))
+                .OrderBy(m => m.SentAt)
+                .ToListAsync();
+        }
+
+        public async Task SendMessageAsync(Message message)
+        {
+            await _context.Messages.AddAsync(message);
+            await _context.SaveChangesAsync();
+        }
     }
 }

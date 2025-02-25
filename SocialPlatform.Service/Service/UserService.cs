@@ -138,5 +138,34 @@ namespace SocialPlatform.Service.Service
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        public async Task<IEnumerable<UserDto>> SearchUsersAsync(string query)
+        {
+            var users = await _userRepository.SearchUsersAsync(query);
+            return users.Select(u => new UserDto
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                Email = u.Email,
+                Language = u.Language,
+                ProfilePictureUrl = u.ProfilePictureUrl,
+                LastLoginAt = u.LastLoginAt
+            });
+        }
+
+        public async Task<IEnumerable<UserDto>> GetChattedUsersAsync(int userId)
+        {
+            var users = await _userRepository.GetChattedUsersAsync(userId);
+            return users.Select(u => new UserDto
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                Email = u.Email,
+                Language = u.Language,
+                ProfilePictureUrl = u.ProfilePictureUrl,
+                LastLoginAt = u.LastLoginAt
+            });
+        }
     }
 }
